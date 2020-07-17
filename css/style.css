@@ -1,0 +1,236 @@
+body{
+    overflow: hidden;
+}
+button, input{
+	-webkit-appearance: none !important;
+	border-radius: 0 !important;
+}
+/* ページ共通 */
+/* ヘッダー */
+.header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 10vh;
+    z-index: 10;
+    background-color: #fff;
+}
+.header ul{
+    display: flex;
+    padding: 0;
+    width: 100%;
+}
+.header img{
+    width: 100%;
+    height: auto;
+}
+.header li{
+    list-style: none;
+    text-align: center;
+}
+.header li:first-of-type{
+    width: 20%;
+}
+.header li:nth-of-type(2){
+    width: 70%;
+}
+.header li:last-of-type{
+    width: 20%;
+}
+/* メイン */
+.wrapper{
+	padding: 10vh 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #3c9;
+}
+/* フッター */
+.footer{
+	background-color: #333;
+    bottom: 0;
+    display: flex;
+	height: calc((100vw / 4) -2vw);
+	margin: 0;
+	padding: 0;
+    position: fixed;
+	text-align: center;
+    width: 100%;
+	
+}
+.footer li{
+    list-style: none;
+    width: 25%;
+}
+.footer button{
+	padding: 2vw;
+	width: 90%;
+	height: 90%;
+	border: none;
+	background-color: #333;
+}
+.footer img{
+	width: 90%;
+	height: auto;
+}
+.back-button,
+.prev-button{
+    user-select: none;
+}
+/* QRコードリーダー */
+.reader {
+    background-color: #cc9;
+    width: 100%;
+    height: 100%;
+    position: relative;
+	padding-top: 5vh;
+	text-align: center;
+}
+.reader img{
+	margin: 0 auto;
+}
+.reader-video {
+	margin: 0 auto;
+    background-color: #000;
+    width: 70vw;
+    height: 70vw;
+    object-fit: fill;
+	display: none;
+}
+.reader-video.show {
+	display: block;
+}
+.tokuten-img{
+	width: 60vw;
+	height: auto;
+	display: none;
+}
+.tokuten-img.show{
+	display: block;
+}
+.cover-img{
+	width: 60vw;
+	height: auto;
+	display: none;
+}
+.cover-img.show{
+	display: block;
+}
+.scan-button{
+	background-color: #cc9;
+	border: none;
+	display: none;
+	margin: 0 auto;
+}
+.scan-button.show{
+	display: block;
+}
+.scan-button-img{
+	width: 50vw;
+	height: auto;
+}
+/* コンテンツページ */
+.youtube-wrapper{
+    display: none;
+}
+.youtube-wrapper.show{
+    display: block;
+}
+.iframe-wrapper{
+    display: none;
+}
+.iframe-wrapper.show{
+    display: block;
+}
+.youtube{
+    width: 100%;
+    height: calc(100vw * 9/ 16);
+}
+.thumbnail{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vw * 9 / 16);
+    background: linear-gradient(#0c3a7b, #1657a9);
+    z-index: 10;
+    opacity: 0.1;
+    
+}
+.play {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: calc(100vw * 18 / 32);
+    opacity: 0.1;
+}
+.text-contents-wrapper{
+    display: none;
+    position: fixed;
+    z-index: 11;
+    text-align: center;
+    top: calc((110vw * 9 / 16) + 20vw);
+    width: 100%;
+}
+.text-contents-wrapper.show{
+    display: block;
+}
+.text-contents-wrapper > div{
+    background-color: #9cf;
+    border: 1px solid #000;
+    border-radius: 10px;
+    width: 80vw;
+    margin: 0 auto;
+    padding: 20px 10px;
+    text-align: center;
+}
+.iframe{
+    width: 100%;
+    height: calc(100vw * 9 / 16);
+    overflow:hidden;
+}
+.close{
+    margin-top: 20px;
+}
+.related-site-wrapper{
+    margin-top: 20px;
+    display: none;
+}
+.related-site-wrapper.show{
+    display: block;
+    text-align: center;
+}
+.related-site-link{
+    background-color: #fff;
+    border-radius: 5px;
+    color: #f00;
+    padding: 20px 0;
+    text-decoration: none;
+    display: inline-block;
+    width: 96%;
+}
+.icon-wrapper{
+    margin-top: 20px;
+    display: none;    
+}
+.icon-wrapper.show{
+    display: block;
+    text-align: center;
+}
+/* 履歴ページ */
+.history{
+    background-color: #fff;
+    border-collapse: collapse;
+    margin: 20px auto;
+    width: 98%;
+}
+.history,
+.history tr,
+.history td{
+    border: 1px solid #000;
+    font-size:xx-small;
+}
+.history td{
+    padding: 4px;
+}
