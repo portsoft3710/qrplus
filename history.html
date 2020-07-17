@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="content-language" content="ja">
+<meta name="theme-color" content="#000">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="apple-touch-icon" href="img/icons/icon-152x152.png">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="QRプラス!">
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="manifest" href="./manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js')
+}
+</script>
+</head>
+<body>
+<div class="header">
+    <ul>
+        <li><button type="button">応募</button></li>
+        <li><img src="img/002.png"></li>
+        <li><button type="button" onclick="window.location.href='history.html'">履歴</button></li>
+    </ul>
+</div>
+<div class="wrapper">
+    <table id="js-history" class="history">
+    </table>
+</div>
+<ul class="footer">
+    <li><button type="button" id="js-reload-button" onclick="reloadPage();"><img src="img/reload.png"></button></li>
+    <li><button type="button" id="js-back-button" class="back-button" onclick="backPage();"><img src="img/back.png"></button></li>
+    <li><button type="button" id="js-forward-button" class="forward-button" onclick="forwardPage();"><img src="img/forward.png"></button></li>
+    <li><button type="button" id="js-qr-button" onclick="redirectQRpageAndScan();"><img src="img/scan.png"></button></li>
+</ul>
+<script src="js/dexie.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/util.js"></script>
+<!--<script src="js/main.js"></script>-->
+<script>
+const db = new Dexie('QRPlus');
+db.version(1).stores({
+    triggerHistories: '++id, triggerId, date',
+    pointHistories: '++id, triggerId, date, point',
+});
+
+db.pointHistories.toArray().then(function(pointHistories){
+    const triggers = getStorage('triggers');
+    const table = document.querySelector('#js-history');
+    const now = new Date();
+    pointHistories.forEach(function(pointHistory){
+        const targetTriggers = triggers.filter(function(trigger){
+            return pointHistory['triggerId'] == trigger['id'];
+        });
+        if(targetTriggers.length > 0){
+            const trigger = targetTriggers[0];
+            const row1  = table.insertRow(-1);
+
+            const iconCell = row1.insertCell(-1);
+            iconCell.rowSpan = 5;
+            const link = 'contents.html?trigger=' + trigger['id'];
+            const imagePath = trigger['historyIcon'];
+            iconCell.innerHTML = '<a href="' + link + '"><img src="' + imagePath + '"></a>';
+
+            const titleLeftCell = row1.insertCell(-1);
+            titleLeftCell.innerHTML = 'タイトル名';
+            const titleRightCell = row1.insertCell(-1);
+            titleRightCell.innerHTML = trigger['title'];
+            
+            const row2  = table.insertRow(-1);
+            const nameLeftCell = row2.insertCell(-1);
+            nameLeftCell.innerHTML = '名称';
+            const nameRightCell = row2.insertCell(-1);
+            nameRightCell.innerHTML = trigger['historyName'];
+            
+            const row3  = table.insertRow(-1);
+            const commentLeftCell = row3.insertCell(-1);
+            commentLeftCell.innerHTML = 'コメント';
+            const commentRightCell = row3.insertCell(-1);
+            commentRightCell.innerHTML = trigger['historyComent'];
+
+            const row4  = table.insertRow(-1);
+            const pointLeftCell = row4.insertCell(-1);
+            pointLeftCell.innerHTML = '付与ポイント';
+            const pointRightCell = row4.insertCell(-1);
+            pointRightCell.innerHTML = pointHistory['point'];
+            
+            const row5  = table.insertRow(-1);
+            const dateLeftCell = row5.insertCell(-1);
+            dateLeftCell.innerHTML = '受信日時';
+            const dateRightCell = row5.insertCell(-1);
+            const date = new Date(pointHistory['date']);
+            dateRightCell.innerHTML = date.getFullYear() + '/' + ('0' + (date.getMonth() + 1)).slice(-2) + '/' + ('0' +  date.getDate()).slice(-2) + ' ' + ('0' +  date.getHours()).slice(-2) + ':' + ('0' +  date.getMinutes()).slice(-2);
+        }
+    });
+});
+</script>
+</body>
+</html>

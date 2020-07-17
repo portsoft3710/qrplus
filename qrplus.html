@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta http-equiv="content-language" content="ja">
+<meta name="theme-color" content="#000">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<link rel="apple-touch-icon" href="img/icons/icon-152x152.png">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-title" content="QRプラス!">
+<link rel="stylesheet" href="css/normalize.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="apple-touch-icon" href="">
+<link rel="manifest" href="./manifest.json">
+<script>
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js')
+}
+</script>
+</head>
+<body>
+<div class="header">
+    <ul>
+        <li><button type="button">応募</button></li>
+        <li><img src="img/002.png"></li>
+        <li><button type="button" onclick="window.location.href='history.html'">履歴</button></li>
+    </ul>
+</div>
+<div class="wrapper">
+<div class="reader">
+		<img id="js-tokuten-img" class="tokuten-img show" src="img/tokuten.png">
+		<video id="js-video" class="reader-video" autoplay playsinline></video>
+		<img id="js-cover-img" class="cover-img show" src="img/scan_image.png">
+    	<button id="js-scan-button" class="scan-button show" type="button" onclick="dispCamera();"><img class="scan-button-img" src="img/scan_start.png"></button>
+</div>    
+<div style="display:none">
+  <canvas id="js-canvas"></canvas>
+</div>
+</div>
+<ul class="footer">
+    <li><button type="button" id="js-reload-button" onclick="reloadPage();"><img src="img/reload.png"></button></li>
+    <li><button type="button" id="js-back-button" class="back-button" onclick="backPage();"><img src="img/back.png"></button></li>
+    <li><button type="button" id="js-forward-button" class="forward-button" onclick="forwardPage();"><img src="img/forward.png"></button></li>
+    <li><button type="button" id="js-qr-button" onclick="dispCamera();"><img src="img/scan.png"></button></li>
+</ul>
+<audio id="audio-win" src="sound/win.mp3"></audio>
+<script src="js/dexie.min.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/jsQR.js"></script>
+<script src="js/QRapp.js"></script>
+<script src="js/util.js"></script>
+<script src="js/main.js"></script>
+<script>
+	const settings = getStorage('QRPlusSettings');
+	document.title = settings['title'];
+	setTimeout(reloadPage, settings['reload'] * 1 * 60 * 1000);
+	
+	document.addEventListener('click', audioPlay);
+	function audioPlay() {
+		document.getElementById('audio-win').muted = true;
+		document.getElementById('audio-win').play();
+	}
+	if(location.search.substring(1) == 'qrreader'){
+		history.replaceState(null,null, 'qrplus.html');
+		dispCamera();
+	}
+	//debugger;
+    //checkTrigger('T0004');
+</script>
+</body>
+</html>
